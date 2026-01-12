@@ -99,14 +99,27 @@
       body {
         padding-top: 140px;
           
-        background-position: 25% 100%;
+        background-position: -120px -60px;
       }
 
-      header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
+     header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  padding: 20px 10px;
+
+  /* 🔴 MUHIM QISM */
+  background: rgba(15, 45, 58, 0.65);
+
+  z-index: 10;
+}
 
       .logo {
         height: 90px;

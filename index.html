@@ -191,6 +191,30 @@
       📄 Sertifikatni yuklab olish
     </a>
   </div>
+<script>
+  // URL dan id ni olish
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  // Sertifikat bloki
+  const cert = document.querySelector(".certificate");
+
+  if (!id) {
+    cert.innerHTML = `
+      <h2>ID topilmadi</h2>
+      <p>Iltimos, QR kod orqali kiring.</p>
+    `;
+  } else {
+    cert.insertAdjacentHTML("beforeend", `
+      <p style="margin-top:15px; font-size:13px; opacity:0.8;">
+        Sertifikat ID: <b>${id}</b>
+      </p>
+      <p style="color:green; font-weight:bold;">
+        ✔ Haqiqiy sertifikat
+      </p>
+    `);
+  }
+</script>
 
 </body>
 </html>

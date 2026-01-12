@@ -192,11 +192,19 @@
     </a>
   </div>
 <script>
-  // URL dan id ni olish
+  // URL dan ID ni olamiz
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
-  // Sertifikat bloki
+  // 👉 HAQIQIY ID LAR RO‘YXATI (hozircha 1 ta)
+  const validIDs = {
+    "AGMK-0001": {
+      name: "Saparaliyev Sharifjon Dilshod o‘g‘li",
+      course: "Avtomatlashtirish",
+      date: "08.01.2026"
+    }
+  };
+
   const cert = document.querySelector(".certificate");
 
   if (!id) {
@@ -204,17 +212,22 @@
       <h2>ID topilmadi</h2>
       <p>Iltimos, QR kod orqali kiring.</p>
     `;
+  } else if (validIDs[id]) {
+    cert.innerHTML = `
+      <h2 style="color:green;">✔ Haqiqiy sertifikat</h2>
+      <p><b>Ism:</b> ${validIDs[id].name}</p>
+      <p><b>Kurs:</b> ${validIDs[id].course}</p>
+      <p><b>Sana:</b> ${validIDs[id].date}</p>
+      <p><b>ID:</b> ${id}</p>
+    `;
   } else {
-    cert.insertAdjacentHTML("beforeend", `
-      <p style="margin-top:15px; font-size:13px; opacity:0.8;">
-        Sertifikat ID: <b>${id}</b>
-      </p>
-      <p style="color:green; font-weight:bold;">
-        ✔ Haqiqiy sertifikat
-      </p>
-    `);
+    cert.innerHTML = `
+      <h2 style="color:red;">❌ Bunday sertifikat topilmadi</h2>
+      <p>ID: <b>${id}</b></p>
+    `;
   }
 </script>
+
 
 </body>
 </html>

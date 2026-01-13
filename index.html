@@ -217,7 +217,16 @@
         "Muhandislik kursini muvaffaqiyatli yakunlagani uchun";
 
       const status = document.createElement("p");
-      status.innerHTML = "✅ <b>Haqiqiy sertifikat</b><br>Berilgan sana: " + cert.date;
+     const rawDate = new Date(cert.date);
+
+const formattedDate =
+  rawDate.getDate().toString().padStart(2, '0') + "." +
+  (rawDate.getMonth() + 1).toString().padStart(2, '0') + "." +
+  rawDate.getFullYear();
+
+status.innerHTML =
+  "✅ <b>Haqiqiy sertifikat</b><br>Berilgan sana: " + formattedDate;
+
       status.style.marginTop = "15px";
       document.querySelector(".certificate").appendChild(status);
     });

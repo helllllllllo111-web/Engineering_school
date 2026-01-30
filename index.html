@@ -2,15 +2,11 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
-
-  <!-- MOBIL UCHUNgit add . MUHIM -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Olmaliq KMK AJ o'quv markazi Muhandislik maktabi
-    <link rel="icon" type="image/png" href="favicon.png">
+  <title>Olmaliq KMK AJ o‘quv markazi Muhandislik maktabi</title>
+  <link rel="icon" type="image/png" href="favicon.png">
 
-  </title>
-  
   <style>
     * { box-sizing: border-box; }
 
@@ -27,7 +23,6 @@
       padding-top: 120px;
     }
 
-    /* ===== HEADER ===== */
     header {
       position: fixed;
       top: 0;
@@ -50,7 +45,6 @@
       font-weight: bold;
     }
 
-    /* ===== SERTIFIKAT (DESKTOP) ===== */
     .certificate {
       background: #fff;
       border-radius: 16px;
@@ -63,20 +57,17 @@
     .certificate h1 {
       font-size: 26px;
       margin-bottom: 8px;
-      color: #000;
     }
 
     .certificate p {
       font-size: 15px;
       margin: 8px 0;
-      color: #000;
     }
 
     .name {
       font-size: 30px;
       font-weight: bold;
       margin: 15px 0;
-      color: #000;
     }
 
     .btn {
@@ -88,12 +79,10 @@
       text-decoration: none;
       border-radius: 10px;
       font-weight: bold;
-      font-size: 15px;
     }
 
     .btn:hover { background: #00a2d4; }
 
-    /* ===== MOBIL ===== */
     @media (max-width: 768px) {
       body {
         padding-top: 140px;
@@ -106,7 +95,7 @@
         align-items: center;
         text-align: center;
         padding: 5px 10px;
-        background: rgba(15, 45, 58, 0.65);
+        background: rgba(15,45,58,0.65);
       }
 
       .certificate {
@@ -133,7 +122,7 @@
   <div class="header-text">
     “OLMALIQ KON-METALLURGIYA KOMBINATI”<br>
     AKSIYADORLIK JAMIYATI<br>
-    O'QUV MARKAZI MUHANDISLIK MAKTABI
+    O‘QUV MARKAZI MUHANDISLIK MAKTABI
   </div>
 </header>
 
@@ -173,48 +162,30 @@ fetch(API_URL)
       "Muhandislik kursini muvaffaqiyatli yakunlagani uchun";
 
     const d = new Date(cert.date);
-    const date =
+    const formattedDate =
       String(d.getDate()).padStart(2,'0') + "." +
       String(d.getMonth()+1).padStart(2,'0') + "." +
       d.getFullYear();
 
-    const status = document.createElement("p");
-    status.innerHTML = "✅ <b>Haqiqiy sertifikat</b><br>Berilgan sana: " + date;
-    status.style.marginTop = "15px";
-    document.querySelector(".certificate").appendChild(status);
-
     const pdfLink = document.getElementById("pdfLink");
-    pdfLink.href = `pdf/${certId}.pdf`;
-    pdfLink.style.display = "inline-block";
+    const statusText = document.createElement("p");
+    statusText.style.marginTop = "15px";
+
+    if (cert.status === "o‘tdi") {
+      pdfLink.href = `pdf/${certId}.pdf`;
+      pdfLink.style.display = "inline-block";
+
+      statusText.innerHTML =
+        "✅ <b>Haqiqiy sertifikat</b><br>Berilgan sana: " + formattedDate;
+    } else {
+      pdfLink.style.display = "none";
+      statusText.style.color = "red";
+      statusText.innerHTML =
+        "❌ <b>Sertifikat berilmagan</b><br>Imtihondan o‘tilmagan";
+    }
+
+    document.querySelector(".certificate").appendChild(statusText);
   });
-  const cert = data[certId];
-const pdfLink = document.getElementById("pdfLink");
-
-document.querySelector("h1").innerText = cert.course;
-document.querySelector(".name").innerText = cert.name;
-document.querySelector(".certificate p").innerText =
-  "Muhandislik kursini muvaffaqiyatli yakunlagani uchun";
-
-const statusText = document.createElement("p");
-statusText.style.marginTop = "15px";
-
-if (cert.status === "o‘tdi") {
-  // ✅ O‘TGANDAR
-  pdfLink.href = `pdf/${certId}.pdf`;
-  pdfLink.style.display = "inline-block";
-
-  statusText.innerHTML =
-    "✅ <b>Haqiqiy sertifikat</b><br>Berilgan sana: " + formattedDate;
-} else {
-  // ❌ O‘TMAGANDA
-  pdfLink.style.display = "none";
-
-  statusText.innerHTML =
-    "❌ <b>Sertifikat berilmagan</b><br>Imtihondan o‘tilmagan";
-}
-
-document.querySelector(".certificate").appendChild(statusText);
-
 </script>
 
 </body>

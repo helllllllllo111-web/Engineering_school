@@ -161,25 +161,31 @@ fetch(API_URL)
     document.querySelector(".certificate p").innerText =
       "Muhandislik kursini muvaffaqiyatli yakunlagani uchun";
 
-    const d = new Date(cert.date);
-    const formattedDate =
-      String(d.getDate()).padStart(2,'0') + "." +
-      String(d.getMonth()+1).padStart(2,'0') + "." +
-      d.getFullYear();
-
     const pdfLink = document.getElementById("pdfLink");
     const statusText = document.createElement("p");
     statusText.style.marginTop = "15px";
 
-    if (cert.status === "otdi") {
+    // 🔥 STATUSNI TOZALAYMIZ
+    const cleanStatus = cert.status
+      .toLowerCase()
+      .replace(/\s+/g, "")
+      .replace(/'/g, "")
+      .replace(/‘/g, "");
+
+    if (cleanStatus === "otdi") {
+      const d = new Date(cert.date);
+      const date =
+        String(d.getDate()).padStart(2,'0') + "." +
+        String(d.getMonth()+1).padStart(2,'0') + "." +
+        d.getFullYear();
+
       pdfLink.href = `pdf/${certId}.pdf`;
       pdfLink.style.display = "inline-block";
 
       statusText.innerHTML =
-        "✅ <b>Haqiqiy sertifikat</b><br>Berilgan sana: " + formattedDate;
+        "✅ <b>Haqiqiy sertifikat</b><br>Berilgan sana: " + date;
     } else {
       pdfLink.style.display = "none";
-      statusText.style.color = "red";
       statusText.innerHTML =
         "❌ <b>Sertifikat berilmagan</b><br>Imtihondan o‘tilmagan";
     }
@@ -187,6 +193,7 @@ fetch(API_URL)
     document.querySelector(".certificate").appendChild(statusText);
   });
 </script>
+
 
 </body>
 </html>
